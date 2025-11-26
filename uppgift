@@ -1,0 +1,51 @@
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        string mainInput = "abc"; // change to "123" for it to work
+        int mainResult;
+
+        Console.WriteLine("Step 1–3: Try-Catch conversion");
+        try
+        {
+            mainResult = Convert.ToInt32(mainInput);
+            Console.WriteLine($"Conversion succeeded: {mainResult}");
+        }
+        catch (FormatException e)
+        {
+            Console.WriteLine($"Conversion failed: {e.Message}");
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Step 4: Reflection");
+        Console.WriteLine("- Using exceptions for control flow is slow.");
+        Console.WriteLine("- You only know something went wrong after an exception is thrown, instead of getting a clear true or False answer.");
+        Console.WriteLine("- It makes code harder to read.");
+
+        Console.WriteLine();
+        Console.WriteLine("Step 5: Custom parse function");
+        bool success = TryParseCustom(mainInput, out int parsed);
+        if (success)
+        {
+            Console.WriteLine($"Custom parse succeeded: {parsed}");
+        }
+        else
+        {
+            Console.WriteLine("Custom parse failed: input was not a valid integer.");
+        }
+    }
+
+    public static bool TryParseCustom(string input, out int result)
+    {
+        if (int.TryParse(input, out int value))
+        {
+            result = value;
+            return true;
+        }
+
+        result = default;
+        return false;
+    }
+}
